@@ -7,7 +7,7 @@ package com.example.administrator.kotlindemo.inline
  * 2.官方文档：
  * https://www.kotlincn.net/docs/reference/inline-functions.html#%E5%85%B7%E4%BD%93%E5%8C%96%E7%9A%84%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0
  * 为什么用：
- * 1.节省匿名内部类的创建，2.节省帧栈的创建（这个影响会乎其微，主要是第一点，会飘黄
+ * 1.节省匿名内部类的创建，2.节省帧栈的创建（这个影响会乎其微，主要是第一点，会飘黄,因为平时写代码，方法也是遵从单一职责，没说尽量让少些方法的)
  * 2.主要就是为了拯救lambda表达式
  * 概述：
  *
