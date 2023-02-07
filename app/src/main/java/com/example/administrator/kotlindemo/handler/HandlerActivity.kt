@@ -1,9 +1,6 @@
 package com.example.administrator.kotlindemo.handler
 
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.os.*
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
@@ -54,7 +51,7 @@ class HandlerActivity : AppCompatActivity() {
         // idleHandler 触发的条件及举例
         /**
          *  if (pendingIdleHandlerCount < 0
-                && (mMessages == null || now < mMessages.when)) {
+        && (mMessages == null || now < mMessages.when)) {
          */
         //1.当当前消息队列（为什么是队列呢，因为他就是个链表，而不是单个Message,MessageQueue实际上就是插入到它内部的）mMessages为空，2.或者消息队列中有延时消息
 
@@ -62,6 +59,7 @@ class HandlerActivity : AppCompatActivity() {
         // next方法返回null（不代表mMessages为null）才会退出，但是主线程默认传的false，即不允许退出，一旦强制调用quit会抛异常！
 
         //为什么要用单向链表呢？很简单，增删快，查询正常即可
+
     }
 
     /**
@@ -78,6 +76,32 @@ class HandlerActivity : AppCompatActivity() {
             testAsynchronousMessage()
         } else if (view.id == R.id.btnTestIdleHandler) {
 
+        } else if (view.id == R.id.btnNormalHandler) {
+            // 举例主线程为什么不？？？异步怎么使用
+
+            // 空指针异常
+//            mHandler = object : Handler(null,null){
+//                override fun handleMessage(msg: Message) {
+//                    super.handleMessage(msg)
+//                    println("msg is $msg")
+//                }
+//            }
+//            mHandler.sendMessage(Message.obtain())
+//            mHandler.looper.quit()
+            val thread = Thread {
+                Looper.prepare()
+                mHandler = object : Handler() {
+                    override fun handleMessage(msg: Message) {
+                        super.handleMessage(msg)
+                        println("msg is $msg")
+                    }
+                }
+                Thread.sleep(100)
+                mHandler.sendEmptyMessageDelayed(100, 1000)
+                Looper.loop()
+            }
+            thread.start()
+
         }
     }
 
@@ -92,17 +116,17 @@ class HandlerActivity : AppCompatActivity() {
     /**
      * 如何让消息优先执行。
      *
-         *   //发现为屏障消息
-            if (msg != null && msg.target == null) {
-            // 进入循环当中，直到成功获取异步消息
-            // 所以这里要特别注意，假如只发送屏障，后续没有清除屏障就会进入死循环
-                do {
-                    prevMsg = msg; // 前一个消息 = 当前的屏障消息
-                    msg = msg.next; // 当前消息 = 下一个消息
-                } while (msg != null && !msg.isAsynchronous());
-            }
-            // 根据MessageQueue里的源码，只有满足屏障消息后一个消息为null（则会nativePollOnce）或它为异步消息时才退出，并交个looper处理下个异步消息
-            // 直到mMessages遍历完毕！
+     *   //发现为屏障消息
+    if (msg != null && msg.target == null) {
+    // 进入循环当中，直到成功获取异步消息
+    // 所以这里要特别注意，假如只发送屏障，后续没有清除屏障就会进入死循环
+    do {
+    prevMsg = msg; // 前一个消息 = 当前的屏障消息
+    msg = msg.next; // 当前消息 = 下一个消息
+    } while (msg != null && !msg.isAsynchronous());
+    }
+    // 根据MessageQueue里的源码，只有满足屏障消息后一个消息为null（则会nativePollOnce）或它为异步消息时才退出，并交个looper处理下个异步消息
+    // 直到mMessages遍历完毕！
 
     当设置了同步屏障之后，next函数将会忽略所有的同步消息，返回异步消息。
     也就是说，如果第一条消息就是屏障，那么就往后遍历 看看有没有异步消息

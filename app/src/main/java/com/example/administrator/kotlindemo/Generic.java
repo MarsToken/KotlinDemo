@@ -1,7 +1,6 @@
 package com.example.administrator.kotlindemo;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 /**
  * Created by tellerWang on 2021/6/30.
@@ -16,11 +15,12 @@ public class Generic {
         Source<? extends Object> objectSource = source;
         //objectSource.nextT();
     }
-    void write(Source<String> source){
+
+    void write(Source<String> source) {
 
     }
 
-    interface Source<T>{
+    interface Source<T> {
         T nextT();
     }
 }
