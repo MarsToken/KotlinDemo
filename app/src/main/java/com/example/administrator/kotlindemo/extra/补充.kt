@@ -27,6 +27,24 @@ fun main() {
     // Kotlin 官方只建议我们将 inline 用于修饰高阶函数，滥用不会提升性能，且会有警告
     // 所以总结：如何提高性能呢？尽量用高阶函数代替接口，且被调用的高阶函数用inline修饰
     // 16.操作符自定义
+    // 17.委托的四种方式 两个属性之间的委托，by lazy,Delegates.observable,by map,还有自定义属性代理对象 by XXX 9PropertyProxy
+    // 自定义委托也可以通过：借助 Kotlin 提供的 ReadWriteProperty（val）、ReadOnlyProperty(var) 这两个接口，来自定义委托
+    // 场景1：属性封装，livedata  val 不可变 by ::_可变livedata
+    // 场景2：数据双向绑定！！！operate provideDelegate 操作符！=>基础能力库！！composeUI声明式UI缩影，ui会变吗？
+    // 18.泛型的不可变性，逆变和协变，星投影 * -> Any?
+    /**
+        open class Animal()
+        class Dog : Animal()
+        class Cat : Animal()
+        // 一旦限定为List<out Animal>,则泛型只能获取不能赋值add了！！！
+        fun foo(list: MutableList<out Animal>) {
+            list.add(Dog()) // 报错，这是赋值
+            list.add(Cat()) // 报错，这是赋值
+            val dog = list[0] // 不报错
+            val animal: Animal = list[0] // 不报错
+        }
+     */
+
 
 }
 
