@@ -3,7 +3,7 @@ package com.example.administrator.kotlindemo.lesson3
 /**
  * 运算符重载的定义：
  * 1.必须operator
- * 2.函数名字必须相同（参考官方文档），形式参数也必须相同，返回值无要求！！！
+ * 2.函数名字必须相同（参考官方文档 https://www.kotlincn.net/docs/reference/operator-overloading.html），形式参数也必须相同，返回值无要求！！！
  * 3.注意必须依赖类
  *  a+b a.plus(b)
  *  a-b a.minus(b)
