@@ -27,14 +27,14 @@ fun main() {
     //3.flatMap 双重循环，将多元分解为1元
     println("======flatMap=========")
     val list1 = listOf(1..2, 2..5, 10..20)
-    //看提示：下一行右下方
+    //看提示：下一行右下方:二维变一维，平铺开。
     val newList2 = list1.flatMap {
         it.map {
             "No$it"
         }
     }
     newList2.forEach(::println)
-    //4.reduce 求和，求阶乘
+    //4.reduce 求和，求阶乘，底层实现：尾递归
     println("=============reduce=================")
     //acc 前边的累计，i 第i个元素
     val result = list.reduce { acc, i -> acc + i }
@@ -45,7 +45,7 @@ fun main() {
     //5.fold 与reduce类似，reduce没有初始值是第一个元素；fold可以指定初始值 acc，它是 fold 传递的第一个参数
     println("=============fold=================")
     val result2 = (0..6).fold(1) { acc, i -> acc + i }
-    println("acc初始值为1：$result2")
+    println("acc初始值为1：$result2") // 相当于1+0+1+2+...+6
     val result3 = (0..6).map(::factorial).fold(5) { acc, i ->
         acc + i
     }
@@ -137,7 +137,7 @@ fun main() {
     //12.also
     println("=============also=================")
     //4.交换两个变量
-    var a = 1
+    var a = 1 // var temp = a,a=b,b=temp
     var b = 2
     a = b.also {
         println("it=$it")
@@ -148,6 +148,13 @@ fun main() {
         println("name is $name,age is $age")
     }
     println("run_result is $run_result")
+    //14.onEach 相当于forEach，不过返回值是他自己
+    val lists = arrayListOf<String>("1","2s","3w")
+    lists.onEach {
+        println("result is $it")
+    }.map {
+        "$it-end"
+    }
 }
 
 fun factorial(n: Int): Int {

@@ -3,6 +3,12 @@ package com.example.administrator.kotlindemo.extra
 /**
  * Created by WangMaoBo.
  * Date: 2023-01-31
+ *
+ * 难点：
+ * 1.高阶函数
+ * 2.InLineTest.kt inline的使用
+ * 3.Start.baidu案例
+ *
  */
 
 fun main() {

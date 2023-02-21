@@ -4,6 +4,7 @@ package com.example.administrator.kotlindemo.inline
  * 资料：
  * 1.https://juejin.cn/post/6844904201353429006
  * 重学 Kotlin —— inline，包治百病的性能良药
+ * https://juejin.cn/post/7050729336080433188
  * 2.官方文档：
  * https://www.kotlincn.net/docs/reference/inline-functions.html#%E5%85%B7%E4%BD%93%E5%8C%96%E7%9A%84%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0
  * 为什么用：

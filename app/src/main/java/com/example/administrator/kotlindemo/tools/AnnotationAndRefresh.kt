@@ -7,3 +7,17 @@ package com.example.administrator.kotlindemo.tools
  * @since 2023/2/17
  */
 
+/**
+ * 四大元注解
+ *
+ * @Target
+ * @Retention
+ * @Repeatable
+ * @MustBeDocumented
+ *
+ */
+
+/**
+ * 高阶函数的用法
+ * fold
+ */
