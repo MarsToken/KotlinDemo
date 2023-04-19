@@ -1,9 +1,23 @@
 package com.example.administrator.kotlindemo.tools
 
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import java.util.concurrent.Executors
+import javax.xml.namespace.NamespaceContext
+import kotlin.coroutines.ContinuationInterceptor
+import kotlin.coroutines.CoroutineContext
 
 /**
  * 1.协程的重要性：
@@ -55,7 +69,7 @@ import kotlinx.coroutines.withContext
  * Created by WangMaoBo.
  * Date: 2023-02-22
  */
-fun main() {
+suspend fun main() {
     runBlocking {
         withContext(Dispatchers.IO) {
             println("ThreadName is ${Thread.currentThread().name}")
@@ -66,5 +80,20 @@ fun main() {
 
             }
         }
+    }
+    GlobalScope.launch {
+        delay(100)
+        println("1")
+    }
+    println("2")
+    delay(1000)
+    val mySingleDispatcher = Executors.newSingleThreadExecutor {
+        Thread(it, "MySingleThread").apply { isDaemon = true }
+    }.asCoroutineDispatcher()
+    CoroutineScope(Job() +mySingleDispatcher).launch {
+        // key:[CoroutineName]、[ContinuationInterceptor]、[Job]、[CoroutineExceptionHandler]
+        // 如何获取携程上下文，一共四个。参考map的用法
+        val same = coroutineContext[ContinuationInterceptor] == mySingleDispatcher
+        println("isSame $same")
     }
 }
